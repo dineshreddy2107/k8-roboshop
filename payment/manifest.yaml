@@ -56,11 +56,26 @@ spec:
       containers:
       - name: payment
         image: joindevops/payment:v1
+
+  # Load ConfigMap values (CART_HOST, USER_HOST, AMQP_HOST)
         envFrom:
         - configMapRef:
-            name: payment
-        - secretRef:
-            name: payment
+          name: payment
+
+  # Load RabbitMQ credentials from the payment secret
+    env:
+     - name: AMQP_USER
+       valueFrom:
+         secretKeyRef:
+          name: payment
+          key: RABBITMQ_DEFAULT_USER
+
+     - name: AMQP_PASS
+       valueFrom:
+        secretKeyRef:
+          name: payment
+          key: RABBITMQ_DEFAULT_PASS
+
 ---
 apiVersion: v1
 kind: Service

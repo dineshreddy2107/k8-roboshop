@@ -59,8 +59,8 @@ spec:
         image: joindevops/payment:v1
 
   # Load ConfigMap values (CART_HOST, USER_HOST, AMQP_HOST)
-        envFrom:
-        - configMapRef:
+      envFrom:
+      - configMapRef:
           name: payment
 
   # Load RabbitMQ credentials from the payment secret
